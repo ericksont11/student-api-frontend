@@ -15,10 +15,10 @@ function getStudents() {
     })
     .then(function (data) {
         container.innerHTML = ""
-        for (let i = 0; i < data.students.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             const div = document.createElement("div");
             div.classList.add("item");
-            div.textContent = `${data.students[i].first_name} ${data.students[i].last_name}`
+            div.textContent = `${data[i].first_name} ${data[i].last_name}`
             div.setAttribute("data-index", i)
             div.addEventListener('click', getStudentInfo)
             container.appendChild(div)
@@ -34,10 +34,10 @@ function getTopics() {
     })
     .then(function (data) {
         container.innerHTML = ""
-        for (let i = 0; i < data.topics.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             const div = document.createElement("div");
             div.classList.add("item");
-            div.textContent = `${data.topics[i].topic}`
+            div.textContent = `${data[i].topic}`
             container.appendChild(div)
         }
         return data
@@ -51,10 +51,10 @@ function getInstructors() {
     })
     .then(function (data) {
         container.innerHTML = ""
-        for (let i = 0; i < data.instructors.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             const div = document.createElement("div");
             div.classList.add("item");
-            div.textContent = `${data.instructors[i].first_name} ${data.instructors[i].last_name}`
+            div.textContent = `${data[i].first_name} ${data[i].last_name}`
             container.appendChild(div)
         }
         return data
@@ -72,7 +72,7 @@ function getStudentInfo(e) {
         const div = document.createElement("div");
         div.classList.add("item");
         div.style.backgroundColor = 'blue'
-        div.textContent = `${studentData.students[studentIndex].first_name} ${studentData.students[studentIndex].last_name}`
+        div.textContent = `${studentData[studentIndex].first_name} ${studentData[studentIndex].last_name}`
         container.appendChild(div)
 
         fetch(instructorsURL)
@@ -80,11 +80,11 @@ function getStudentInfo(e) {
             return response.json();
         })
         .then(function (data) {
-            for (let i = 0; i < data.instructors.length; i++) {
-                if (data.instructors[i].id === studentData.students[studentIndex].instructor){
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].id === studentData[studentIndex].instructor){
                     const div = document.createElement("div");
                     div.classList.add("item");
-                    div.textContent = `Instructor: ${data.instructors[i].first_name} ${data.instructors[i].last_name}`
+                    div.textContent = `Instructor: ${data[i].first_name} ${data[i].last_name}`
                     container.appendChild(div)
                 }
             }
@@ -95,13 +95,12 @@ function getStudentInfo(e) {
             return response.json();
         })
         .then(function (data) {
-            for (let i = 0; i < data.topics.length; i++) {
-                if (data.topics[i].id === studentData.students[studentIndex].favorite_topic){
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].id === studentData[studentIndex].favorite_topic){
                     const div = document.createElement("div");
                     div.classList.add("item");
-                    div.textContent = `Favorite Subject: ${data.topics[i].topic}`
+                    div.textContent = `Favorite Subject: ${data[i].topic}`
                     container.appendChild(div)
-                    console.log(`${data.topics[i].topic}`)
                 }
             }
         });
